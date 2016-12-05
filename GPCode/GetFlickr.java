@@ -32,11 +32,7 @@ public class GetFlickr {
 	public static void main(String [] args) throws Exception {
 
 		DemoGUI frame = new DemoGUI();
-		frame.setTitle("Swing GUI Demo");
-		frame.setSize(DemoGUI.frameWidth, DemoGUI.frameHeight);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.createFrame();
 
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
@@ -54,64 +50,66 @@ public class GetFlickr {
 			;
 		}
 
-		// tag to search for
-		String searchTerm = "SFSUCS413F16Test";
-		String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
-		// number of results per page
-		String request = api + "&per_page=16";
-		request += "&format=json&nojsoncallback=1&extras=geo";
-		request += "&api_key=" + "e739c91c42e2153f2e769cb2f9bdcd1d";
+		//// tag to search for
+		//String searchTerm = "SFSUCS413F16Test";
+		//String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
+		//// number of results per page
+		//String request = api + "&per_page=16";
+		//request += "&format=json&nojsoncallback=1&extras=geo";
+		//request += "&api_key=" + "e739c91c42e2153f2e769cb2f9bdcd1d";
 
 		// optional search fields
 		//String userId = "88935360@N05";
 		//request += "&user_id=" + userId;
 		//request += "&tags=hydrocephalic";
 
-		if (searchTerm.length() != 0) {
-			request += "&tags="+searchTerm;
-		}
+		// handle search
 
-		System.out.println("Sending http GET request:");
-		System.out.println(request);
-
-		// open http connection
-		URL obj = new URL(request);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// send GET request
-		con.setRequestMethod("GET");
-
-		// get response
-		int responseCode = con.getResponseCode();
-
-		System.out.println("Response Code : " + responseCode);
-
-		// read and construct response String
-		BufferedReader in = new BufferedReader(new InputStreamReader
-				(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		System.out.println(response);
-
-		Gson gson = new Gson();
-		String s = response.toString();
-
-		Response responseObject = gson.fromJson(s, Response.class);
-		System.out.println("# photos = " + responseObject.photos.photo.length);
-		System.out.println("Photo 0:");
-		int farm = responseObject.photos.photo[0].farm;
-		String server = responseObject.photos.photo[0].server;
-		String id = responseObject.photos.photo[0].id;
-		String secret = responseObject.photos.photo[0].secret;
-		String photoUrl = "http://farm"+farm+".static.flickr.com/"
-				+server+"/"+id+"_"+secret+".jpg";
-		System.out.println(photoUrl);
+		//if (search.searchTerm.length() != 0) {
+		//	search.request += "&tags="+ search.searchTerm;
+		//}
+        //
+		//System.out.println("Sending http GET request:");
+		//System.out.println(search.request);
+        //
+		//// open http connection
+		//URL obj = new URL(search.request);
+		//HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        //
+		//// send GET request
+		//con.setRequestMethod("GET");
+        //
+		//// get response
+		//int responseCode = con.getResponseCode();
+        //
+		//System.out.println("Response Code : " + responseCode);
+        //
+		//// read and construct response String
+		//BufferedReader in = new BufferedReader(new InputStreamReader
+		//		(con.getInputStream()));
+		//String inputLine;
+		//StringBuffer response = new StringBuffer();
+        //
+		//while ((inputLine = in.readLine()) != null) {
+		//	response.append(inputLine);
+		//}
+		//in.close();
+        //
+		//System.out.println(response);
+        //
+		//Gson gson = new Gson();
+		//String s = response.toString();
+        //
+		//Response responseObject = gson.fromJson(s, Response.class);
+		//System.out.println("# photos = " + responseObject.photos.photo.length);
+		//System.out.println("Photo 0:");
+		//int farm = responseObject.photos.photo[0].farm;
+		//String server = responseObject.photos.photo[0].server;
+		//String id = responseObject.photos.photo[0].id;
+		//String secret = responseObject.photos.photo[0].secret;
+		//String photoUrl = "http://farm"+farm+".static.flickr.com/"
+		//		+server+"/"+id+"_"+secret+".jpg";
+		//System.out.println(photoUrl);
 
 	}
 }

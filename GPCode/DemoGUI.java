@@ -1,9 +1,16 @@
 package GPCode;
 
+import com.google.gson.Gson;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -13,32 +20,69 @@ public class DemoGUI extends JFrame implements ActionListener {
 	JTextField numResultsStr = new JTextField("10");
 	JPanel onePanel;
 	JScrollPane oneScrollPanel;
-	JButton testButton = new JButton("Test");
 	JButton searchButton = new JButton("Search");
-	JButton deleteButton = new JButton("Delete");
-	JButton loadButton = new JButton("Load");
-	JButton exitButton = new JButton("Exit");
+    JButton testButton = new JButton("Test");
+    JButton loadButton = new JButton("Load");
+    JButton deleteButton = new JButton("Delete");
+    JButton saveButton = new JButton("Save");
+    JButton exitButton = new JButton("Exit");
 
 	static int frameWidth = 800;
 	static int frameHeight = 600;
 
+    GFModel search = new GFModel();
+
 	public DemoGUI() {
 
-		// create bottom subpanel with buttons, flow layout
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-		buttonsPanel.add(testButton);
-		buttonsPanel.add(exitButton);
-		// add listener for clicks
-		testButton.addActionListener(this);
-		exitButton.addActionListener(this);
+        // create bottom panel with buttons, flow layout
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
 
-		buttonsPanel.add(loadButton);
-		buttonsPanel.add(deleteButton);
+        // create middle panel
+        JPanel textFieldSubPanel = new JPanel(new FlowLayout());
+        JLabel tl = new JLabel("Enter search tag:");
+        JLabel tNum = new JLabel("max search results:");
+        searchTagField.setColumns(23);
+        numResultsStr.setColumns(2);
 
-		loadButton.addActionListener(this);
-		deleteButton.addActionListener(this);
+        // create and add container panel for bottom and middle subpanels
+        JPanel textFieldPanel = new JPanel();
+        textFieldPanel.setLayout(new BoxLayout(textFieldPanel, BoxLayout.Y_AXIS));
+        textFieldPanel.add(textFieldSubPanel);
+        textFieldPanel.add(buttonsPanel);
 
+        // add buttons/labels to middle panel
+        textFieldSubPanel.add(tl);
+        textFieldSubPanel.add(searchTagField);
+        textFieldSubPanel.add(searchButton);
+        textFieldSubPanel.add(tNum);
+        textFieldSubPanel.add(numResultsStr);
+
+        // add buttons to bottom panel
+        buttonsPanel.add(testButton);
+        buttonsPanel.add(loadButton);
+        buttonsPanel.add(deleteButton);
+        buttonsPanel.add(saveButton);
+        buttonsPanel.add(exitButton);
+
+        // create top panel
+        onePanel = new JPanel();
+        onePanel.setLayout(new BoxLayout(onePanel, BoxLayout.Y_AXIS));
+        oneScrollPanel = new JScrollPane(onePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        oneScrollPanel.setPreferredSize(new Dimension(frameWidth, frameHeight-100));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        add(oneScrollPanel);
+        add(textFieldPanel);
+
+        // add listeners for when buttons are clicked
+        testButton.addActionListener(this);
+        exitButton.addActionListener(this);
+        loadButton.addActionListener(this);
+        deleteButton.addActionListener(this);
+        searchButton.addActionListener(this);
+        searchTagField.addActionListener(this);
+
+        //todo what is this for and can we delete it?
 		// some kind of test sout for an object
 		System.out.println("testButton at " +
 				testButton.getClass().getName() +
@@ -49,92 +93,109 @@ public class DemoGUI extends JFrame implements ActionListener {
 			System.out.println(comp[i].getClass().getName() +
 					"@" + Integer.toHexString(hashCode()));
 		}
-
-
-		// create middle subpanel with 2 text fields and button, border layout
-		JPanel textFieldSubPanel = new JPanel(new FlowLayout());
-		// create and add label to subpanel
-		JLabel tl = new JLabel("Enter search tag:");
-		textFieldSubPanel.add(tl);
-
-		// set width of left text field
-		searchTagField.setColumns(23);
-		// add listener for typing in left text field
-		searchTagField.addActionListener(this);
-		// add left text field to middle subpanel
-		textFieldSubPanel.add(searchTagField);
-		// add search button to middle subpanel
-		textFieldSubPanel.add(searchButton);
-		// add listener for searchButton clicks
-		searchButton.addActionListener(this);
-
-		// create and add label to middle subpanel, add to middle subpanel
-		JLabel tNum = new JLabel("max search results:");
-		numResultsStr.setColumns(2);
-		textFieldSubPanel.add(tNum);
-		textFieldSubPanel.add(numResultsStr);
-
-		// create and add panel to contain bottom and middle subpanels
-	/*
-	JPanel textFieldPanel = new JPanel(new BorderLayout());
-	textFieldPanel.add(buttonsPanel, BorderLayout.SOUTH);
-	textFieldPanel.add(textFieldSubPanel, BorderLayout.NORTH);
-	*/
-		JPanel textFieldPanel = new JPanel();
-		textFieldPanel.setLayout(new BoxLayout(textFieldPanel, BoxLayout.Y_AXIS));
-		textFieldPanel.add(textFieldSubPanel);
-		textFieldPanel.add(buttonsPanel);
-
-		// create top panel
-		onePanel = new JPanel();
-		onePanel.setLayout(new BoxLayout(onePanel, BoxLayout.Y_AXIS));
-
-		// create scrollable panel for top panel
-		oneScrollPanel = new JScrollPane(onePanel,
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		oneScrollPanel.setPreferredSize(new Dimension(frameWidth, frameHeight-100));
-		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		// add scrollable panel to main frame
-		add(oneScrollPanel);
-
-		// add panel with buttons and textfields to main frame
-		add(textFieldPanel);
-
-
 	}
 
-	//public static void main(String [] args) throws Exception {
-	//	DemoGUI frame = new DemoGUI();
-	//	frame.setTitle("Swing GUI Demo");
-	//	frame.setSize(frameWidth, frameHeight);
-	//	frame.setLocationRelativeTo(null);
-	//	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	//	frame.setVisible(true);
-	//}
+    /** HELPER FUNCTIONS **/
+    public void createFrame() {
+        this.setTitle("Swing GUI Demo");
+        this.setSize(DemoGUI.frameWidth, DemoGUI.frameHeight);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
 
 	public void actionPerformed(ActionEvent e) {
-		//todo refactor this into a switch statement
 		if (e.getSource() == searchButton) {
-			System.out.println("Search");
-			//todo create function to handle search
-		}
+            searchButtonPressed();
+        }
 		else if (e.getSource() == testButton) {
-			System.out.println("Test");
+            testButtonPressed();
 		}
-		else if (e.getSource() == deleteButton) {
-			System.out.println("Delete");
-			//todo create function to handle image deletion
-		}
-		else if (e.getSource() == loadButton) {
-			System.out.println("Load");
-		}
-		else if (e.getSource() == exitButton) {
-			System.exit(0);
-		}
-		else if (e.getSource() == searchTagField) {
-			System.out.println("searchTagField: " + searchTagField.getText());
-		}
+        else if (e.getSource() == loadButton) {
+            loadButtonPressed();
+        }
+        else if (e.getSource() == deleteButton) {
+            deleteButtonPressed();
+        }
+        else if (e.getSource() == saveButton) {
+            saveButtonPressed();
+        }
+        else if (e.getSource() == exitButton) {
+            System.exit(0);
+        }
 	}
 
+    private void saveButtonPressed() {
+        System.out.println("Save button pressed");
+    }
+
+    private void searchButtonPressed() {
+        System.out.println("Search button pressed");
+        search.setSearchTerm(searchTagField.getText());
+        try {
+            handleSearch();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void loadButtonPressed() {
+        System.out.println("Load button pressed");
+    }
+
+    private void deleteButtonPressed() {
+        System.out.println("Delete button pressed");
+    }
+
+    private void testButtonPressed() {
+        System.out.println("Test button pressed");
+    }
+
+    public void handleSearch() throws IOException {
+        if (search.searchTerm.length() != 0) {
+            search.request += "&tags="+ search.searchTerm;
+        }
+
+        System.out.println("Sending http GET request:");
+        System.out.println(search.request);
+
+        // open http connection
+        URL obj = new URL(search.request);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // send GET request
+        con.setRequestMethod("GET");
+
+        // get response
+        int responseCode = con.getResponseCode();
+
+        System.out.println("Response Code : " + responseCode);
+
+        // read and construct response String
+        BufferedReader in = new BufferedReader(new InputStreamReader
+                (con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        System.out.println(response);
+
+        Gson gson = new Gson();
+        String s = response.toString();
+
+        Response responseObject = gson.fromJson(s, Response.class);
+        System.out.println("# photos = " + responseObject.photos.photo.length);
+        System.out.println("Photo 0:");
+        int farm = responseObject.photos.photo[0].farm;
+        String server = responseObject.photos.photo[0].server;
+        String id = responseObject.photos.photo[0].id;
+        String secret = responseObject.photos.photo[0].secret;
+        String photoUrl = "http://farm"+farm+".static.flickr.com/"
+                +server+"/"+id+"_"+secret+".jpg";
+        System.out.println(photoUrl);
+    }
 }
