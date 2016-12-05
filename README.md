@@ -3,9 +3,9 @@
 ##### Evan Terry and Alex Gaesser
 
 
-* Build an online photo album application that access photos from flickr.com. (vide)[https://vimeo.com/193262006]
+* Build an online photo album application that access photos from flickr.com. [video](https://vimeo.com/193262006)
 
-* For the Test button only, see this demo (video.)[https://vimeo.com/194252110]
+* For the Test button only, see this demo [video.](https://vimeo.com/194252110)
 
 * Follow the GUI layout shown in the demo video. If you’d like to customize the application view, you must get permission from Dr. Hsu first.
 
