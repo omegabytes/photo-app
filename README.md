@@ -1,6 +1,6 @@
 #Online Photo album
-##CSC 413
-#### Evan Terry ad Alex Gaesser
+###CSC 413
+##### Evan Terry ad Alex Gaesser
 
 
 * Build an online photo album application that access photos from flickr.com. (vide)[https://vimeo.com/193262006]
