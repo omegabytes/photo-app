@@ -17,6 +17,7 @@ public class DemoGUI extends JFrame implements ActionListener {
 	JButton searchButton = new JButton("Search");
 	JButton deleteButton = new JButton("Delete");
 	JButton loadButton = new JButton("Load");
+	JButton exitButton = new JButton("Exit");
 
 	static int frameWidth = 800;
 	static int frameHeight = 600;
@@ -26,10 +27,11 @@ public class DemoGUI extends JFrame implements ActionListener {
 		// create bottom subpanel with buttons, flow layout
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-		// add testButton to bottom subpanel
 		buttonsPanel.add(testButton);
-		// add listener for testButton clicks
+		buttonsPanel.add(exitButton);
+		// add listener for clicks
 		testButton.addActionListener(this);
+		exitButton.addActionListener(this);
 
 		buttonsPanel.add(loadButton);
 		buttonsPanel.add(deleteButton);
@@ -126,6 +128,9 @@ public class DemoGUI extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == loadButton) {
 			System.out.println("Load");
+		}
+		else if (e.getSource() == exitButton) {
+			System.exit(0);
 		}
 		else if (e.getSource() == searchTagField) {
 			System.out.println("searchTagField: " + searchTagField.getText());
