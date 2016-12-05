@@ -23,12 +23,20 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.swing.*;
 
 public class GetFlickr {
 	GetFlickr() {
 	}
 
 	public static void main(String [] args) throws Exception {
+
+		DemoGUI frame = new DemoGUI();
+		frame.setTitle("Swing GUI Demo");
+		frame.setSize(DemoGUI.frameWidth, DemoGUI.frameHeight);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
@@ -47,7 +55,7 @@ public class GetFlickr {
 		}
 
 		// tag to search for
-		String key = "SFSUCS413F16Test";
+		String searchTerm = "SFSUCS413F16Test";
 		String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
 		// number of results per page
 		String request = api + "&per_page=16";
@@ -59,8 +67,8 @@ public class GetFlickr {
 		//request += "&user_id=" + userId;
 		//request += "&tags=hydrocephalic";
 
-		if (key.length() != 0) {
-			request += "&tags="+key;
+		if (searchTerm.length() != 0) {
+			request += "&tags="+searchTerm;
 		}
 
 		System.out.println("Sending http GET request:");
