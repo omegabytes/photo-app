@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Component;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -111,9 +112,15 @@ public class GFView extends JFrame implements ActionListener {
         if (e.getSource() == searchButton) {
             try {
                 controller.searchButtonPressed(searchTagField.getText());
+                for (Image i : controller.model.imageList) {
+                    onePanel.add(new JLabel(new ImageIcon(i)));
+                }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            onePanel.revalidate();
+            onePanel.repaint();
+            oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == testButton) {
             try {

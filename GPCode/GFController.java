@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 
 /**
  * Created by alex on 12/5/16.
@@ -53,6 +54,7 @@ public class GFController {
     public void searchButtonPressed(String text) throws IOException {
         System.out.println("Search button pressed");
         model.handleSearch(text);
+        getImageList(model.urlList);
     }
 
     public void loadButtonPressed() {
@@ -87,6 +89,13 @@ public class GFController {
             return null;
         }
         return img;
+    }
+
+    private void getImageList(ArrayList<String> urlStrings) {
+        //ArrayList<Image> imageList = new ArrayList<>();
+        for (String t : urlStrings) {
+            model.imageList.add(getImageURL(t));
+        }
     }
 
 }

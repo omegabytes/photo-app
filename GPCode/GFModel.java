@@ -21,6 +21,7 @@ public class GFModel {
                                 + "&api_key="
                                 + "e739c91c42e2153f2e769cb2f9bdcd1d";
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
+    public  ArrayList<Image> imageList = new ArrayList<>();
     public Image testURL;
     // optional search fields
 
