@@ -9,21 +9,12 @@
 
 package GPCode;
 
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-
-import com.google.gson.*;
-import com.google.gson.Gson;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.swing.*;
 
 public class GetFlickr {
 	GetFlickr() {
@@ -31,7 +22,7 @@ public class GetFlickr {
 
 	public static void main(String [] args) throws Exception {
 
-		DemoGUI frame = new DemoGUI();
+		GFView frame = new GFView();
 		frame.createFrame();
 
 		// Create a trust manager that does not validate certificate chains
