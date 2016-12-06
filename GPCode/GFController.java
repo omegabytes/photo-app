@@ -6,6 +6,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -43,12 +46,18 @@ public class GFController {
             ;
         }
     }
-
     GFModel model = new GFModel();
 
     public void saveButtonPressed() {
         System.out.println("Save button pressed");
         //todo: handle save
+        //test for file creation
+        try {
+            createURLFile("https://returnofsavedURL.here");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void searchButtonPressed(String text) throws IOException {
@@ -76,6 +85,45 @@ public class GFController {
 
     public void exitButtonPressed() {
         System.exit(0);
+    }
+
+    // added by Evan Terry to create file for saved URLs
+    public static void createURLFile (String url) throws IOException {
+
+        BufferedWriter bufferedWriter = null;
+        FileWriter writer = null;
+
+        File file = new File("listsofURLs.txt");
+
+        // creates the file
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            // creates a FileWriter Object
+            writer = new FileWriter(file, true);
+            bufferedWriter = new BufferedWriter(writer);
+
+            // Writes the content to the file
+            bufferedWriter.write(url + '\n');
+        }
+        catch (IOException e) {
+            System.out.print("Something happened but I have no clue as to what.");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.out.print("Something happened but I have no clue as to what.");
+                e.printStackTrace();
+            }
+        }
     }
 
     private Image getImageURL(String urlString) {

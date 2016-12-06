@@ -23,6 +23,7 @@ public class GFModel {
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
     public  ArrayList<Image> imageList = new ArrayList<>();
     public Image testURL;
+
     // optional search fields
 
     //request += "&tags=hydrocephalic";
@@ -31,6 +32,7 @@ public class GFModel {
     //request += "&user_id=" + userId;
 
     public void handleSearch(String searchTerm) throws IOException {
+
         if (searchTerm.length() != 0) {
             request += "&tags="+ searchTerm;
         }
