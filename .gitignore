@@ -1,1 +1,5 @@
 .idea/*
+.idea/
+photo-app.iml
+lib/
+out/production/photo-app/

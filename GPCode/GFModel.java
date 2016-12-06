@@ -14,6 +14,8 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
+
+
 /**
  * Created by alex on 12/5/16.
  */
@@ -24,6 +26,7 @@ public class GFModel {
                                 + "&format=json&nojsoncallback=1&extras=geo"
                                 + "&api_key="
                                 + "e739c91c42e2153f2e769cb2f9bdcd1d";
+
     // optional search fields
 
     //request += "&tags=hydrocephalic";
@@ -32,6 +35,9 @@ public class GFModel {
     //request += "&user_id=" + userId;
 
     public void handleSearch(String searchTerm) throws IOException {
+
+        GFController.createURLFile(searchTerm);
+
         if (searchTerm.length() != 0) {
             request += "&tags="+ searchTerm;
         }
