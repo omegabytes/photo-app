@@ -1,22 +1,10 @@
 package GPCode;
 
-import com.google.gson.Gson;
-
 import java.awt.*;
 import java.awt.event.*;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.awt.Component;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -36,6 +24,7 @@ public class GFView extends JFrame implements ActionListener {
     JButton deleteButton = new JButton("Delete");
     JButton saveButton = new JButton("Save");
     JButton exitButton = new JButton("Exit");
+
 
     static int frameWidth = 800;
     static int frameHeight = 600;
@@ -86,6 +75,8 @@ public class GFView extends JFrame implements ActionListener {
         add(oneScrollPanel);
         add(textFieldPanel);
 
+
+
         // add listeners for when buttons are clicked
         testButton.addActionListener(this);
         exitButton.addActionListener(this);
@@ -125,7 +116,14 @@ public class GFView extends JFrame implements ActionListener {
             }
         }
         else if (e.getSource() == testButton) {
-            controller.testButtonPressed();
+            try {
+                onePanel.add(new JLabel(new ImageIcon(controller.testButtonPressed())));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            onePanel.revalidate();
+            onePanel.repaint();
+            oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == loadButton) {
             controller.loadButtonPressed();

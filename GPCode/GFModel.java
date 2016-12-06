@@ -2,30 +2,26 @@ package GPCode;
 
 import com.google.gson.Gson;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
-
-
+import java.util.ArrayList;
 
 /**
  * Created by alex on 12/5/16.
  */
 public class GFModel {
-    public String userID;
     public String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
     public String request = api + "&per_page=16"
                                 + "&format=json&nojsoncallback=1&extras=geo"
                                 + "&api_key="
                                 + "e739c91c42e2153f2e769cb2f9bdcd1d";
+    public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
+    public Image testURL;
 
     // optional search fields
 
@@ -76,12 +72,15 @@ public class GFModel {
         Response responseObject = gson.fromJson(s, Response.class);
         System.out.println("# photos = " + responseObject.photos.photo.length);
         System.out.println("Photo 0:");
-        int farm = responseObject.photos.photo[0].farm;
-        String server = responseObject.photos.photo[0].server;
-        String id = responseObject.photos.photo[0].id;
-        String secret = responseObject.photos.photo[0].secret;
-        String photoUrl = "http://farm"+farm+".static.flickr.com/"
-                +server+"/"+id+"_"+secret+".jpg";
-        System.out.println(photoUrl);
+        for (int i = 0; i< responseObject.photos.photo.length; i++) {
+            int farm = responseObject.photos.photo[i].farm;
+            String server = responseObject.photos.photo[i].server;
+            String id = responseObject.photos.photo[i].id;
+            String secret = responseObject.photos.photo[i].secret;
+            String photoUrl = "http://farm"+farm+".static.flickr.com/"
+                    +server+"/"+id+"_"+secret+".jpg";
+            System.out.println(photoUrl);
+            urlList.add(photoUrl);
+        }
     }
 }
