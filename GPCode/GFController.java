@@ -46,6 +46,7 @@ public class GFController {
             ;
         }
     }
+
     GFModel model = new GFModel();
 
     public void saveButtonPressed() {
@@ -140,7 +141,6 @@ public class GFController {
     }
 
     private void getImageList(ArrayList<String> urlStrings) {
-        //ArrayList<Image> imageList = new ArrayList<>();
         for (String t : urlStrings) {
             model.imageList.add(getImageURL(t));
         }

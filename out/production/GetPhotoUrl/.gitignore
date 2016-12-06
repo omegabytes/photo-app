@@ -1,3 +1,5 @@
 .idea/*
 .idea/
-out/production/GetPhotoUrl/GPCode/
+photo-app.iml
+lib/
+out/production/photo-app/

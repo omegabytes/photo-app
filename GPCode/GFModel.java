@@ -22,15 +22,16 @@ public class GFModel {
                                 + "e739c91c42e2153f2e769cb2f9bdcd1d";
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
     public  ArrayList<Image> imageList = new ArrayList<>();
-    public Image testURL;
 
     // optional search fields
-
     //request += "&tags=hydrocephalic";
-
     //String userId = "88935360@N05";
     //request += "&user_id=" + userId;
 
+    public Image getImage(int i) {
+       Image image = imageList.get(i);
+        return image;
+    }
     public void handleSearch(String searchTerm) throws IOException {
 
         if (searchTerm.length() != 0) {
