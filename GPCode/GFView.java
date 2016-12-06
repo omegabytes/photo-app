@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -11,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -32,11 +38,11 @@ public class GFView extends JFrame implements ActionListener {
     JButton exitButton = new JButton("Exit");
 
     static int frameWidth = 800;
-	static int frameHeight = 600;
+    static int frameHeight = 600;
 
-	public GFView() {
+    public GFView() {
         initComponents();
-	}
+    }
 
     private void initComponents() {
 
@@ -110,17 +116,17 @@ public class GFView extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == searchButton) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == searchButton) {
             try {
                 controller.searchButtonPressed(searchTagField.getText());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
-		else if (e.getSource() == testButton) {
+        else if (e.getSource() == testButton) {
             controller.testButtonPressed();
-		}
+        }
         else if (e.getSource() == loadButton) {
             controller.loadButtonPressed();
         }
@@ -133,5 +139,5 @@ public class GFView extends JFrame implements ActionListener {
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
         }
-	}
+    }
 }
