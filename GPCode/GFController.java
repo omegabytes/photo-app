@@ -1,11 +1,13 @@
 package GPCode;
 
+import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
@@ -40,6 +42,7 @@ public class GFController {
             ;
         }
     }
+
     GFModel model = new GFModel();
 
     public void saveButtonPressed() {
@@ -62,13 +65,28 @@ public class GFController {
         //todo: handle delete
     }
 
-    public void testButtonPressed() {
+    public Image testButtonPressed() throws IOException {
         System.out.println("Test button pressed");
         //todo: handle test
+        String testSearch = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
+        return getImageURL(testSearch);
     }
 
     public void exitButtonPressed() {
         System.exit(0);
+    }
+
+    private Image getImageURL(String urlString) {
+        Image img = null;
+        try {
+            final URL url = new URL(urlString);
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            System.out.println("Error loading image");
+            e.printStackTrace();
+            return null;
+        }
+        return img;
     }
 
 }
