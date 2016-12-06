@@ -51,6 +51,12 @@ public class GFController {
         System.out.println("Save button pressed");
         //todo: handle save
         //test for file creation
+        try {
+            createURLFile("https://returnofsavedURL.here");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void searchButtonPressed(String text) throws IOException {

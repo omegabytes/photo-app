@@ -32,8 +32,6 @@ public class GFModel {
 
     public void handleSearch(String searchTerm) throws IOException {
 
-        GFController.createURLFile(searchTerm);
-
         if (searchTerm.length() != 0) {
             request += "&tags="+ searchTerm;
         }
