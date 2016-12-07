@@ -19,6 +19,9 @@ import java.util.ArrayList;
  * Created by alex on 12/5/16.
  */
 public class GFController {
+    public GFController() throws IOException {
+    }
+
     public static void main(String [] args) throws Exception {
 
         GFView frame = new GFView();
@@ -81,6 +84,7 @@ public class GFController {
         System.out.println("Test button pressed");
         //todo: handle test
         String testSearch = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
+        //testSearch = "http://r.ddmcdn.com/s_f/o_1/cx_633/cy_0/cw_1725/ch_1725/w_720/APL/uploads/2014/11/too-cute-doggone-it-video-playlist.jpg";
         return getImageURL(testSearch);
     }
 

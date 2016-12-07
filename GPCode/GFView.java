@@ -30,7 +30,7 @@ public class GFView extends JFrame implements ActionListener {
     static int frameWidth = 800;
     static int frameHeight = 600;
 
-    public GFView() {
+    public GFView() throws IOException {
         initComponents();
     }
 
@@ -90,7 +90,7 @@ public class GFView extends JFrame implements ActionListener {
 
     /** HELPER FUNCTIONS **/
     public void createFrame() {
-        this.setTitle("Swing GUI Demo");
+        this.setTitle("Photo App");
         this.setSize(GFView.frameWidth, GFView.frameHeight);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,7 +102,8 @@ public class GFView extends JFrame implements ActionListener {
             try {
                 controller.searchButtonPressed(searchTagField.getText());
                 for (Image i : model.imageList) {
-                    onePanel.add(new JLabel(new ImageIcon(i)));
+                    JButton imageButton = new JButton(new ImageIcon(i));
+                    onePanel.add(imageButton);
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -113,7 +114,7 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == testButton) {
             try {
-                onePanel.add(new JLabel(new ImageIcon(controller.testButtonPressed())));
+                onePanel.add(new JButton(new ImageIcon(controller.testButtonPressed())));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -133,6 +134,8 @@ public class GFView extends JFrame implements ActionListener {
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
         }
+
+
     }
 
     // some kind of test sout for an object

@@ -3,3 +3,7 @@
 photo-app.iml
 lib/
 out/production/photo-app/
+/.gitignore
+out/production/GetPhotoUrl/GPCode/
+.config
+/out
