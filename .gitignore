@@ -3,6 +3,8 @@
 photo-app.iml
 lib/
 out/production/photo-app/
+.DS_Store
+.config
 /.gitignore
 out/production/GetPhotoUrl/GPCode/
 .config

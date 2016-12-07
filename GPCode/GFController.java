@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by alex on 12/5/16.
@@ -92,13 +94,16 @@ public class GFController {
         System.exit(0);
     }
 
-    // added by Evan Terry to create file for saved URLs
-    public static void createURLFile (String url) throws IOException {
+    // Created by Evan Terry to create file for saved URLs
+    //todo : images at selected index saved url appends to file
+    private void createURLFile (String url) throws IOException {
+
+        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
         BufferedWriter bufferedWriter = null;
         FileWriter writer = null;
 
-        File file = new File("listsofURLs.txt");
+        File file = new File("Saved Image URLs" + timestamp +".text");
 
         // creates the file
         try {
@@ -131,11 +136,24 @@ public class GFController {
         }
     }
 
+    private void savedImages(String savedImages) {
+
+        for (int i = 0; i < model.savedImagesURL.size(); i++) {
+            try {
+                createURLFile(model.savedImagesURL.get(i));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private Image getImageURL(String urlString) {
         Image img = null;
         try {
             final URL url = new URL(urlString);
             img = ImageIO.read(url);
+            createURLFile(urlString);
         } catch (IOException e) {
             System.out.println("Error loading image");
             e.printStackTrace();

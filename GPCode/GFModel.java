@@ -18,8 +18,11 @@ public class GFModel {
     public String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
     public String request;
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
-    public  ArrayList<Image> imageList = new ArrayList<>();
+    public ArrayList<Image> imageList = new ArrayList<>();
+    public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
     public  ArrayList<JButton> buttonList = new ArrayList<>();
+    public Image testURL;
+
 
     // optional search fields
     //request += "&tags=hydrocephalic";
