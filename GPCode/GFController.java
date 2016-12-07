@@ -87,7 +87,8 @@ public class GFController {
         System.exit(0);
     }
 
-    // added by Evan Terry to create file for saved URLs
+    // Created by Evan Terry to create file for saved URLs
+    //todo : images at selected index saved url appends to file
     public static void createURLFile (String url) throws IOException {
 
         BufferedWriter bufferedWriter = null;
