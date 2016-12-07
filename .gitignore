@@ -3,3 +3,5 @@
 photo-app.iml
 lib/
 out/production/photo-app/
+.DS_Store
+.config
