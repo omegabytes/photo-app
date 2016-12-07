@@ -2,10 +2,9 @@ package GPCode;
 
 import com.google.gson.Gson;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,23 +14,40 @@ import java.util.ArrayList;
  * Created by alex on 12/5/16.
  */
 public class GFModel {
+    public String apiKey;
     public String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
-    public String request = api + "&per_page=16"
-                                + "&format=json&nojsoncallback=1&extras=geo"
-                                + "&api_key="
-                                + "e739c91c42e2153f2e769cb2f9bdcd1d";
+    public String request;
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
     public ArrayList<Image> imageList = new ArrayList<>();
     public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
-
+    public  ArrayList<JButton> buttonList = new ArrayList<>();
     public Image testURL;
 
+
     // optional search fields
-
     //request += "&tags=hydrocephalic";
-
     //String userId = "88935360@N05";
     //request += "&user_id=" + userId;
+    public GFModel() throws IOException {
+        try {
+            FileReader fileReader = new FileReader(new File(".config"));
+            BufferedReader br = new BufferedReader(fileReader);
+            apiKey = br.readLine();
+            request = api + "&per_page=16"
+                          + "&format=json&nojsoncallback=1&extras=geo"
+                          + "&api_key="
+                          + apiKey;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Image getImage(int i) {
+       Image image = imageList.get(i);
+        return image;
+    }
+
 
     public void handleSearch(String searchTerm) throws IOException {
 

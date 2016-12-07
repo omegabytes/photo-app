@@ -5,7 +5,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Component;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -13,6 +12,7 @@ public class GFView extends JFrame implements ActionListener {
 
 
     GFController controller = new GFController();
+    private GFModel model = controller.model;
 
     JTextField searchTagField = new JTextField("");
     JTextField numResultsStr = new JTextField("10");
@@ -30,7 +30,7 @@ public class GFView extends JFrame implements ActionListener {
     static int frameWidth = 800;
     static int frameHeight = 600;
 
-    public GFView() {
+    public GFView() throws IOException {
         initComponents();
     }
 
@@ -72,11 +72,10 @@ public class GFView extends JFrame implements ActionListener {
         onePanel.setLayout(new BoxLayout(onePanel, BoxLayout.Y_AXIS));
         oneScrollPanel = new JScrollPane(onePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         oneScrollPanel.setPreferredSize(new Dimension(frameWidth, frameHeight-100));
+        oneScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         add(oneScrollPanel);
         add(textFieldPanel);
-
-
 
         // add listeners for when buttons are clicked
         testButton.addActionListener(this);
@@ -86,22 +85,12 @@ public class GFView extends JFrame implements ActionListener {
         searchButton.addActionListener(this);
         searchTagField.addActionListener(this);
 
-        //todo what is this for and can we delete it?
-        // some kind of test sout for an object
-        System.out.println("testButton at " +
-                testButton.getClass().getName() +
-                "@" + Integer.toHexString(hashCode()));
-        System.out.println("Components: ");
-        Component comp[] = buttonsPanel.getComponents();
-        for (int i=0; i<comp.length; i++) {
-            System.out.println(comp[i].getClass().getName() +
-                    "@" + Integer.toHexString(hashCode()));
-        }
+        printTestInfo(buttonsPanel);
     }
 
     /** HELPER FUNCTIONS **/
     public void createFrame() {
-        this.setTitle("Swing GUI Demo");
+        this.setTitle("Photo App");
         this.setSize(GFView.frameWidth, GFView.frameHeight);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,8 +101,9 @@ public class GFView extends JFrame implements ActionListener {
         if (e.getSource() == searchButton) {
             try {
                 controller.searchButtonPressed(searchTagField.getText());
-                for (Image i : controller.model.imageList) {
-                    onePanel.add(new JLabel(new ImageIcon(i)));
+                for (Image i : model.imageList) {
+                    JButton imageButton = new JButton(new ImageIcon(i));
+                    onePanel.add(imageButton);
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -124,7 +114,7 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == testButton) {
             try {
-                onePanel.add(new JLabel(new ImageIcon(controller.testButtonPressed())));
+                onePanel.add(new JButton(new ImageIcon(controller.testButtonPressed())));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -143,6 +133,21 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
+        }
+
+
+    }
+
+    // some kind of test sout for an object
+    private void printTestInfo(JPanel buttonsPanel) {
+        System.out.println("testButton at " +
+                testButton.getClass().getName() +
+                "@" + Integer.toHexString(hashCode()));
+        System.out.println("Components: ");
+        Component comp[] = buttonsPanel.getComponents();
+        for (int i=0; i<comp.length; i++) {
+            System.out.println(comp[i].getClass().getName() +
+                    "@" + Integer.toHexString(hashCode()));
         }
     }
 }
