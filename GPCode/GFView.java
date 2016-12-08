@@ -106,25 +106,10 @@ public class GFView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
-            //try {
-            //    controller.searchButtonPressed(searchTagField.getText());
-            //    for (Image img : model.imageList) {
-            //
-            //        JButton imageButton = new JButton(new ImageIcon(img.getScaledInstance(200,200,Image.SCALE_DEFAULT)));
-            //
-            //        onePanel.add(imageButton);
-            //    }
-            //} catch (IOException e1) {
-            //    e1.printStackTrace();
-            //}
-
             try {
                 controller.searchButtonPressed(searchTagField.getText());
                 for (String url : model.urlList) {
-                    BufferedImage image = resize(url,200);
-
-                    JButton imageButton = new JButton(new ImageIcon(image));
-
+                    JButton imageButton = new JButton(new ImageIcon(resize(url,200)));
                     onePanel.add(imageButton);
                 }
             } catch (IOException e1) {
@@ -136,9 +121,10 @@ public class GFView extends JFrame implements ActionListener {
             oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == testButton) {
-            try {
-                onePanel.add(new JButton(new ImageIcon(controller.testButtonPressed())));
-
+            try{
+                String testUrl = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
+                JButton testButton = new JButton(new ImageIcon(resize(testUrl,200)));
+                onePanel.add(testButton);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
