@@ -8,6 +8,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * Created by alex on 12/5/16.
@@ -20,7 +22,7 @@ public class GFModel {
     public ArrayList<Image> imageList = new ArrayList<>();
     public ArrayList<JButton> buttonList = new ArrayList<>();
     public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
-    public ArrayList<String> selectedImages = new ArrayList<>();
+    public ArrayList<String> selectedImages = new ArrayList<>(); //List of selected images
 
     public int maxResults = 10;
 
@@ -194,16 +196,28 @@ public class GFModel {
         }
     }
 
-    public void deleteSelectedImage(String urlToBeDeleted) {
-        //remove url from urlList
-        for (int i = 0; i < urlList.size(); i++) {
-            String url = urlList.get(i);
+    public void deleteSelectedImage() {
 
-            if (url.equals(urlToBeDeleted)) {
-                urlList.remove(i);
+        ListIterator<String> urlListIterator = urlList.listIterator();
+        ListIterator<String> selectedImagesIterator = selectedImages.listIterator();
+
+        while (selectedImagesIterator.hasNext()){
+
+            String currentURLtobeRemoved = selectedImagesIterator.next();
+
+            while (urlListIterator.hasNext()) {
+                String currentURLinList = urlListIterator.next();
+
+                if (currentURLtobeRemoved.equals(currentURLinList)) {
+                    selectedImagesIterator.remove();
+                    try {
+                        parseFile(currentURLtobeRemoved);
+                    }
+                    catch (IOException e) {
+                         e.printStackTrace();
+                    }
+                }
             }
-
         }
-        //parse data file
     }
 }
