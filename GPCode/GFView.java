@@ -28,7 +28,7 @@ public class GFView extends JFrame implements ActionListener {
     JButton deleteButton = new JButton("Delete");
     JButton saveButton = new JButton("Save");
     JButton exitButton = new JButton("Exit");
-    JButton imageButton = new JButton();
+    JButton imageButton = new JButton("Image");
 
 
     static int frameWidth = 800;
