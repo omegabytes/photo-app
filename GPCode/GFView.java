@@ -138,6 +138,8 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == deleteButton) {
             controller.deleteButtonPressed();
+            onePanel.revalidate();
+            onePanel.repaint();
         }
         else if (e.getSource() == saveButton) {
             controller.saveButtonPressed();
@@ -147,6 +149,7 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == imageButton) {
             System.out.println("imgButton pressed");
+            controller.imageButtonPressed();
         }
 
 
