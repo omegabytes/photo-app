@@ -95,7 +95,7 @@ public class GFController {
     }
 
     public void imageButtonPressed() {
-        model.selectedImages.add();
+//        model.selectedImages.add();
     }
 
 }
