@@ -223,4 +223,33 @@ public class GFModel {
             }
         }
     }
+
+    public void loadImages() throws IOException {
+
+        BufferedReader fileRead = new BufferedReader(new FileReader(file));
+
+        /*
+            Do we replace existing images or append?
+
+            If replacing then we can replace the Array List with one read from the file
+            If appending then we can copy current Array list not saved yet to a temporary
+            Array List then add the remainder on the back of the replacement.
+         */
+
+        urlList.clear();
+        imageList.clear();
+
+        String currentLine;
+
+        try {
+            while ((currentLine = fileRead.readLine()) != null) {
+                getImage(currentLine);
+            }
+        }
+        catch (IOException e) {
+            System.out.print("Something happened but I have no clue as to what.");
+            e.printStackTrace();
+        }
+    }
+
 }
