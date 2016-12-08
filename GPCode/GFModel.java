@@ -20,6 +20,8 @@ public class GFModel {
     public ArrayList<Image> imageList = new ArrayList<>();
     public ArrayList<JButton> buttonList = new ArrayList<>();
     public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
+    public ArrayList<String> selectedImages = new ArrayList<>();
+
     public int maxResults = 10;
 
     private File file;
@@ -190,5 +192,18 @@ public class GFModel {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void deleteSelectedImage(String urlToBeDeleted) {
+        //remove url from urlList
+        for (int i = 0; i < urlList.size(); i++) {
+            String url = urlList.get(i);
+
+            if (url.equals(urlToBeDeleted)) {
+                urlList.remove(i);
+            }
+
+        }
+        //parse data file
     }
 }

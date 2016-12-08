@@ -68,6 +68,7 @@ public class GFController {
     public void deleteButtonPressed() {
         System.out.println("Delete button pressed");
         //todo: handle delete
+        model.deleteSelectedImage();
 //        enable when delete action is created
 //        parseFile();
     }
