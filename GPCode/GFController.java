@@ -51,7 +51,6 @@ public class GFController {
 
     public void saveButtonPressed() {
         System.out.println("Save button pressed");
-        //todo: handle save
         model.saveImages();
     }
 

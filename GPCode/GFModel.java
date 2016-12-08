@@ -5,12 +5,9 @@ import com.google.gson.Gson;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-//import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by alex on 12/5/16.
