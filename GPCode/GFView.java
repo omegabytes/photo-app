@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
@@ -90,10 +89,10 @@ public class GFView extends JFrame implements ActionListener {
         searchButton.addActionListener(this);
         searchTagField.addActionListener(this);
         saveButton.addActionListener(this);
+        imageButton.addActionListener(this);
+
 
         printTestInfo(buttonsPanel);
-
-
     }
 
     /** HELPER FUNCTIONS **/
@@ -107,6 +106,7 @@ public class GFView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
+            model.maxResults = Integer.parseInt(numResultsStr.getText());
             try {
                 controller.searchButtonPressed(searchTagField.getText());
                 for (String url : model.urlList) {
@@ -144,6 +144,9 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
+        }
+        else if (e.getSource() == imageButton) {
+            System.out.println("imgButton pressed");
         }
 
 

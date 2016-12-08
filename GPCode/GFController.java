@@ -92,7 +92,7 @@ public class GFController {
 
     private void getImageList(ArrayList<String> urlStrings) {
         for (String t : urlStrings) {
-            model.imageList.add(getImageURL(t));
+            model.imageList.add(0,getImageURL(t));
         }
     }
 
