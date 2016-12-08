@@ -200,16 +200,19 @@ public class GFModel {
 
         ListIterator<String> urlListIterator = urlList.listIterator();
         ListIterator<String> selectedImagesIterator = selectedImages.listIterator();
+        ListIterator<Image> imageListIterator = imageList.listIterator();
 
         while (selectedImagesIterator.hasNext()){
 
             String currentURLtobeRemoved = selectedImagesIterator.next();
 
-            while (urlListIterator.hasNext()) {
+            while (urlListIterator.hasNext() && imageListIterator.hasNext()) {
                 String currentURLinList = urlListIterator.next();
 
                 if (currentURLtobeRemoved.equals(currentURLinList)) {
                     selectedImagesIterator.remove();
+                    //not sure if this will remove correct image from board
+                    imageListIterator.remove();
                     try {
                         parseFile(currentURLtobeRemoved);
                     }
