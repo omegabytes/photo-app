@@ -89,6 +89,7 @@ public class GFView extends JFrame implements ActionListener {
         deleteButton.addActionListener(this);
         searchButton.addActionListener(this);
         searchTagField.addActionListener(this);
+        saveButton.addActionListener(this);
 
         printTestInfo(buttonsPanel);
 

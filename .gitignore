@@ -9,3 +9,4 @@ out/production/photo-app/
 out/production/GetPhotoUrl/GPCode/
 .config
 /out
+savedURLs.txt
