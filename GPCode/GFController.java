@@ -63,6 +63,7 @@ public class GFController {
     public void loadButtonPressed() {
         System.out.println("Load button pressed");
         //todo: handle load
+        model.loadImages();
     }
 
     public void deleteButtonPressed() {
