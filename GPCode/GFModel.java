@@ -20,8 +20,7 @@ public class GFModel {
     public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
     public ArrayList<Image> imageList = new ArrayList<>();
     public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
-    public  ArrayList<JButton> buttonList = new ArrayList<>();
-    public Image testURL;
+    public int maxResults = 10;
 
 
     // optional search fields
@@ -34,9 +33,9 @@ public class GFModel {
             BufferedReader br = new BufferedReader(fileReader);
             apiKey = br.readLine();
             request = api + "&per_page=16"
-                          + "&format=json&nojsoncallback=1&extras=geo"
-                          + "&api_key="
-                          + apiKey;
+                    + "&format=json&nojsoncallback=1&extras=geo"
+                    + "&api_key="
+                    + apiKey;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,12 +43,14 @@ public class GFModel {
     }
 
     public Image getImage(int i) {
-       Image image = imageList.get(i);
+        Image image = imageList.get(i);
         return image;
     }
 
 
     public void handleSearch(String searchTerm) throws IOException {
+
+        String oldRequest = request;
 
         if (searchTerm.length() != 0) {
             request += "&tags="+ searchTerm;
@@ -88,16 +89,18 @@ public class GFModel {
 
         Response responseObject = gson.fromJson(s, Response.class);
         System.out.println("# photos = " + responseObject.photos.photo.length);
-        System.out.println("Photo 0:");
-        for (int i = 0; i< responseObject.photos.photo.length; i++) {
-            int farm = responseObject.photos.photo[i].farm;
-            String server = responseObject.photos.photo[i].server;
-            String id = responseObject.photos.photo[i].id;
-            String secret = responseObject.photos.photo[i].secret;
-            String photoUrl = "http://farm"+farm+".static.flickr.com/"
-                    +server+"/"+id+"_"+secret+".jpg";
-            System.out.println(photoUrl);
-            urlList.add(photoUrl);
-        }
+
+
+            for (int i = 0; i< maxResults; i++) {
+                    System.out.println("Photo " + i +":");
+                    int farm = responseObject.photos.photo[i].farm;
+                    String server = responseObject.photos.photo[i].server;
+                    String id = responseObject.photos.photo[i].id;
+                    String secret = responseObject.photos.photo[i].secret;
+                    String photoUrl = "http://farm"+farm+".static.flickr.com/"
+                            +server+"/"+id+"_"+secret+".jpg";
+                    System.out.println(photoUrl);
+                    urlList.add(0,photoUrl);
+            }
     }
 }

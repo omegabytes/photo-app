@@ -86,7 +86,7 @@ public class GFController {
         System.exit(0);
     }
 
-    // Created by Evan Terry to create file for saved URLs
+     //Created by Evan Terry to create file for saved URLs
     //todo : images at selected index saved url appends to file
     private void createURLFile (String url) throws IOException {
 
@@ -145,7 +145,7 @@ public class GFController {
         try {
             final URL url = new URL(urlString);
             img = ImageIO.read(url);
-            createURLFile(urlString);
+            //createURLFile(urlString);
         } catch (IOException e) {
             System.out.println("Error loading image");
             e.printStackTrace();
@@ -156,7 +156,7 @@ public class GFController {
 
     private void getImageList(ArrayList<String> urlStrings) {
         for (String t : urlStrings) {
-            model.imageList.add(getImageURL(t));
+            model.imageList.add(0,getImageURL(t));
         }
     }
 

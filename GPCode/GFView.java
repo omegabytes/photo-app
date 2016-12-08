@@ -89,10 +89,9 @@ public class GFView extends JFrame implements ActionListener {
         deleteButton.addActionListener(this);
         searchButton.addActionListener(this);
         searchTagField.addActionListener(this);
+        imageButton.addActionListener(this);
 
         printTestInfo(buttonsPanel);
-
-
     }
 
     /** HELPER FUNCTIONS **/
@@ -106,6 +105,7 @@ public class GFView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
+            model.maxResults = Integer.parseInt(numResultsStr.getText());
             try {
                 controller.searchButtonPressed(searchTagField.getText());
                 for (String url : model.urlList) {
@@ -143,6 +143,9 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
+        }
+        else if (e.getSource() == imageButton) {
+            System.out.println("imgButton pressed");
         }
 
 
