@@ -2,9 +2,13 @@ package GPCode;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -25,6 +29,7 @@ public class GFView extends JFrame implements ActionListener {
     JButton deleteButton = new JButton("Delete");
     JButton saveButton = new JButton("Save");
     JButton exitButton = new JButton("Exit");
+    JButton imageButton = new JButton();
 
 
     static int frameWidth = 800;
@@ -86,6 +91,8 @@ public class GFView extends JFrame implements ActionListener {
         searchTagField.addActionListener(this);
 
         printTestInfo(buttonsPanel);
+
+
     }
 
     /** HELPER FUNCTIONS **/
@@ -99,15 +106,31 @@ public class GFView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
+            //try {
+            //    controller.searchButtonPressed(searchTagField.getText());
+            //    for (Image img : model.imageList) {
+            //
+            //        JButton imageButton = new JButton(new ImageIcon(img.getScaledInstance(200,200,Image.SCALE_DEFAULT)));
+            //
+            //        onePanel.add(imageButton);
+            //    }
+            //} catch (IOException e1) {
+            //    e1.printStackTrace();
+            //}
+
             try {
                 controller.searchButtonPressed(searchTagField.getText());
-                for (Image i : model.imageList) {
-                    JButton imageButton = new JButton(new ImageIcon(i));
+                for (String url : model.urlList) {
+                    BufferedImage image = resize(url,200);
+
+                    JButton imageButton = new JButton(new ImageIcon(image));
+
                     onePanel.add(imageButton);
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+
             onePanel.revalidate();
             onePanel.repaint();
             oneScrollPanel.setViewportView(onePanel);
@@ -115,6 +138,7 @@ public class GFView extends JFrame implements ActionListener {
         else if (e.getSource() == testButton) {
             try {
                 onePanel.add(new JButton(new ImageIcon(controller.testButtonPressed())));
+
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -136,6 +160,19 @@ public class GFView extends JFrame implements ActionListener {
         }
 
 
+    }
+    public BufferedImage resize(String url, int newHeight) throws IOException{
+        URL u = new URL(url);
+        final BufferedImage image = ImageIO.read(u);
+        float width = image.getWidth();
+        float height = image.getHeight();
+        float aspectRatio = height/width;
+        float newWidth = (newHeight/aspectRatio);
+        final BufferedImage resized = new BufferedImage((int)newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = resized.createGraphics();
+        g.drawImage(image, 0, 0, (int)newWidth, newHeight, null);
+        g.dispose();
+        return resized;
     }
 
     // some kind of test sout for an object

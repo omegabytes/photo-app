@@ -131,7 +131,7 @@ public class GFController {
         }
     }
 
-    private Image getImageURL(String urlString) {
+    public Image getImageURL(String urlString) {
         Image img = null;
         try {
             final URL url = new URL(urlString);
