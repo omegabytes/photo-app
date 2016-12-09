@@ -30,7 +30,6 @@ public class GFView extends JFrame implements ActionListener {
     JButton exitButton = new JButton("Exit");
     JButton imageButton = new JButton("Image");
 
-
     static int frameWidth = 800;
     static int frameHeight = 600;
 
@@ -39,7 +38,6 @@ public class GFView extends JFrame implements ActionListener {
     }
 
     private void initComponents() {
-
         // create bottom panel with buttons, flow layout
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
@@ -89,8 +87,6 @@ public class GFView extends JFrame implements ActionListener {
         searchButton.addActionListener(this);
         searchTagField.addActionListener(this);
         saveButton.addActionListener(this);
-        imageButton.addActionListener(this);
-
 
         printTestInfo(buttonsPanel);
     }
@@ -104,17 +100,17 @@ public class GFView extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             model.maxResults = Integer.parseInt(numResultsStr.getText());
-            try {
-                controller.searchButtonPressed(searchTagField.getText());
-                for (String url : model.urlList) {
-                    JButton imageButton = new JButton(new ImageIcon(resize(url,200)));
-                    onePanel.add(imageButton);
-                }
-            } catch (IOException e1) {
-                e1.printStackTrace();
+
+            createImageButton();
+
+            for (JButton button : model.buttonList){
+                imageButton = button;
+                imageButton.addActionListener(this);
+                onePanel.add(imageButton);
             }
 
             onePanel.revalidate();
@@ -126,15 +122,21 @@ public class GFView extends JFrame implements ActionListener {
                 String testUrl = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
                 JButton testButton = new JButton(new ImageIcon(resize(testUrl,200)));
                 onePanel.add(testButton);
+
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+
             onePanel.revalidate();
             onePanel.repaint();
             oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == loadButton) {
-            controller.loadButtonPressed();
+            try {
+                controller.loadButtonPressed();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         else if (e.getSource() == deleteButton) {
             controller.deleteButtonPressed();
@@ -147,13 +149,31 @@ public class GFView extends JFrame implements ActionListener {
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
         }
-        else if (e.getSource() == imageButton) {
-            System.out.println("imgButton pressed");
-            controller.imageButtonPressed();
+        
+        for (int i=0;i<onePanel.getComponents().length;i++) {
+            if (e.getSource() == model.buttonList.get(i)) {
+                System.out.println("Photo " + i + " selected.");
+
+
+            }
+        }
+    }
+
+    public void createImageButton() {
+        try {
+            controller.searchButtonPressed(searchTagField.getText());
+            for (String url : model.urlList) {
+                imageButton = new JButton(new ImageIcon(resize(url,200)));
+                imageButton.setName(url);
+                model.buttonList.add(imageButton);
+
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
 
-
     }
+
     public BufferedImage resize(String url, int newHeight) throws IOException{
         URL u = new URL(url);
         final BufferedImage image = ImageIO.read(u);

@@ -60,7 +60,7 @@ public class GFController {
         getImageList(model.urlList);
     }
 
-    public void loadButtonPressed() {
+    public void loadButtonPressed() throws IOException {
         System.out.println("Load button pressed");
         //todo: handle load
         model.loadImages();

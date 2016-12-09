@@ -45,7 +45,6 @@ public class GFModel {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public Image getImage(int i) {
@@ -241,15 +240,15 @@ public class GFModel {
 
         String currentLine;
 
-        try {
-            while ((currentLine = fileRead.readLine()) != null) {
-                getImage(currentLine);
-            }
-        }
-        catch (IOException e) {
-            System.out.print("Something happened but I have no clue as to what.");
-            e.printStackTrace();
-        }
+        //try {
+        //    while ((currentLine = fileRead.readLine()) != null) {
+        //        getImage(currentLine);
+        //    }
+        //}
+        //catch (IOException e) {
+        //    System.out.print("Something happened but I have no clue as to what.");
+        //    e.printStackTrace();
+        //}
     }
 
 }
