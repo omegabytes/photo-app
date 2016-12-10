@@ -18,10 +18,8 @@ public class GFModel {
     public String apiKey;
     public String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
     public String request;
-    public ArrayList<String> urlList = new ArrayList<>(); // temp url list for testButtonPressed
-    public ArrayList<Image> imageList = new ArrayList<>();
+    public ArrayList<String> urlList = new ArrayList<>();
     public ArrayList<JButton> buttonList = new ArrayList<>();
-    public ArrayList<String> savedImagesURL = new ArrayList<>(); //List of saved images URL
     public ArrayList<String> selectedImages = new ArrayList<>(); //List of selected images
 
     public int maxResults = 10;
@@ -33,29 +31,22 @@ public class GFModel {
     //request += "&tags=hydrocephalic";
     //String userId = "88935360@N05";
     //request += "&user_id=" + userId;
+
     public GFModel() throws IOException {
         try {
             FileReader fileReader = new FileReader(new File(".config"));
             BufferedReader br = new BufferedReader(fileReader);
             apiKey = br.readLine();
-            request = api + "&per_page=16"
-                    + "&format=json&nojsoncallback=1&extras=geo"
-                    + "&api_key="
-                    + apiKey;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Image getImage(int i) {
-        Image image = imageList.get(i);
-        return image;
-    }
-
-
     public void handleSearch(String searchTerm) throws IOException {
-
-        String oldRequest = request;
+        request = api + "&per_page=16"
+                + "&format=json&nojsoncallback=1&extras=geo"
+                + "&api_key="
+                + apiKey;
 
         if (searchTerm.length() != 0) {
             request += "&tags=" + searchTerm;
@@ -104,7 +95,7 @@ public class GFModel {
             String photoUrl = "http://farm"+farm+".static.flickr.com/"
                     +server+"/"+id+"_"+secret+".jpg";
             System.out.println(photoUrl);
-            urlList.add(0,photoUrl);
+            urlList.add(photoUrl);
         }
     }
 
@@ -197,35 +188,36 @@ public class GFModel {
 
     public void deleteSelectedImage() {
 
-        ListIterator<String> urlListIterator = urlList.listIterator();
-        ListIterator<String> selectedImagesIterator = selectedImages.listIterator();
-        ListIterator<Image> imageListIterator = imageList.listIterator();
-
-        while (selectedImagesIterator.hasNext()){
-
-            String currentURLtobeRemoved = selectedImagesIterator.next();
-
-            while (urlListIterator.hasNext() && imageListIterator.hasNext()) {
-                String currentURLinList = urlListIterator.next();
-
-                if (currentURLtobeRemoved.equals(currentURLinList)) {
-                    selectedImagesIterator.remove();
-                    //not sure if this will remove correct image from board
-                    imageListIterator.remove();
-                    try {
-                        parseFile(currentURLtobeRemoved);
-                    }
-                    catch (IOException e) {
-                         e.printStackTrace();
-                    }
-                }
-            }
-        }
+        //ListIterator<String> urlListIterator = urlList.listIterator();
+        //ListIterator<String> selectedImagesIterator = selectedImages.listIterator();
+        ////ListIterator<Image> imageListIterator = imageList.listIterator();
+        //
+        //while (selectedImagesIterator.hasNext()){
+        //
+        //    String currentURLtobeRemoved = selectedImagesIterator.next();
+        //
+        //    while (urlListIterator.hasNext() && imageListIterator.hasNext()) {
+        //        String currentURLinList = urlListIterator.next();
+        //
+        //        if (currentURLtobeRemoved.equals(currentURLinList)) {
+        //            selectedImagesIterator.remove();
+        //            //not sure if this will remove correct image from board
+        //            //aeg: removing it from the urlList should do it
+        //            imageListIterator.remove();
+        //            try {
+        //                parseFile(currentURLtobeRemoved);
+        //            }
+        //            catch (IOException e) {
+        //                 e.printStackTrace();
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     public void loadImages() throws IOException {
 
-        BufferedReader fileRead = new BufferedReader(new FileReader(file));
+        //BufferedReader fileRead = new BufferedReader(new FileReader(file));
 
         /*
             Do we replace existing images or append?
@@ -235,10 +227,10 @@ public class GFModel {
             Array List then add the remainder on the back of the replacement.
          */
 
-        urlList.clear();
-        imageList.clear();
+        //urlList.clear();
+        //imageList.clear();
 
-        String currentLine;
+        //String currentLine;
 
         //try {
         //    while ((currentLine = fileRead.readLine()) != null) {

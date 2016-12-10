@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -38,6 +40,7 @@ public class GFView extends JFrame implements ActionListener {
     }
 
     private void initComponents() {
+
         // create bottom panel with buttons, flow layout
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
@@ -100,12 +103,17 @@ public class GFView extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             model.maxResults = Integer.parseInt(numResultsStr.getText());
 
+            //System.out.println("button list before clear: " + model.buttonList);
+            onePanel.removeAll();
+            model.buttonList.clear();
+            //System.out.println("button list after clear: " + model.buttonList);
+
             createImageButton();
+            //System.out.println("button list after createImageButton(): " + model.buttonList);
 
             for (JButton button : model.buttonList){
                 imageButton = button;
@@ -149,12 +157,10 @@ public class GFView extends JFrame implements ActionListener {
         else if (e.getSource() == exitButton) {
             controller.exitButtonPressed();
         }
-        
-        for (int i=0;i<onePanel.getComponents().length;i++) {
+
+        for (int i=0;i<model.buttonList.size();i++) {
             if (e.getSource() == model.buttonList.get(i)) {
                 System.out.println("Photo " + i + " selected.");
-
-
             }
         }
     }
@@ -163,15 +169,15 @@ public class GFView extends JFrame implements ActionListener {
         try {
             controller.searchButtonPressed(searchTagField.getText());
             for (String url : model.urlList) {
+                int i = 0;
                 imageButton = new JButton(new ImageIcon(resize(url,200)));
-                imageButton.setName(url);
+                imageButton.setName(searchTagField.getText() + i++);
                 model.buttonList.add(imageButton);
-
             }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
+        System.out.println("urlList: " + model.urlList+"\n");
     }
 
     public BufferedImage resize(String url, int newHeight) throws IOException{

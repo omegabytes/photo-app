@@ -57,7 +57,6 @@ public class GFController {
     public void searchButtonPressed(String text) throws IOException {
         System.out.println("Search button pressed");
         model.handleSearch(text);
-        getImageList(model.urlList);
     }
 
     public void loadButtonPressed() throws IOException {
@@ -89,14 +88,7 @@ public class GFController {
         return img;
     }
 
-    private void getImageList(ArrayList<String> urlStrings) {
-        for (String t : urlStrings) {
-            model.imageList.add(0,getImageURL(t));
-        }
-    }
-
     public void imageButtonPressed() {
-//        model.selectedImages.add();
     }
 
 }
