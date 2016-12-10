@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -49,6 +50,7 @@ public class GFModel {
                 + apiKey;
 
         if (searchTerm.length() != 0) {
+            searchTerm = searchTerm.replaceAll(" ","%20");
             request += "&tags=" + searchTerm;
         }
 
