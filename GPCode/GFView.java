@@ -15,7 +15,6 @@ import javax.swing.BoxLayout;
 
 public class GFView extends JFrame implements ActionListener {
 
-
     GFController controller = new GFController();
     private GFModel model = controller.model;
 
@@ -115,22 +114,12 @@ public class GFView extends JFrame implements ActionListener {
             createImageButton();
             //System.out.println("button list after createImageButton(): " + model.buttonList);
 
-            for (JButton button : model.buttonList){
-                imageButton = button;
-                imageButton.addActionListener(this);
-                onePanel.add(imageButton);
-            }
-
-            onePanel.revalidate();
-            onePanel.repaint();
-            oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == testButton) {
             try{
                 String testUrl = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
                 JButton testButton = new JButton(new ImageIcon(resize(testUrl,200)));
                 onePanel.add(testButton);
-
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -161,6 +150,34 @@ public class GFView extends JFrame implements ActionListener {
         for (int i=0;i<model.buttonList.size();i++) {
             if (e.getSource() == model.buttonList.get(i)) {
                 System.out.println("Photo " + i + " selected.");
+
+                //todo: unstaging is not in the specs and has an index out of bounds bug anyway
+                //if (model.buttonList.get(i).isBorderPainted()) {
+                //    model.buttonList.get(i).setBorder(BorderFactory.createEmptyBorder());
+                //    model.buttonList.get(i).setBorderPainted(false);
+                //    System.out.println("model.selectedImages.get(i): " + model.selectedImages.get(i));
+                //    System.out.println("model.buttonList(i).getName(): " + model.buttonList.get(i).getName());
+                //
+                //    if (model.buttonList.get(i).getName().equals(model.selectedImages.get(i))) {
+                //        model.selectedImages.remove(i);
+                //
+                //        System.out.println("url: " + model.buttonList.get(i).getName() + " unstaged, will not be saved.");
+                //        System.out.println("model.selectedImages.get(i) after remove: " + model.selectedImages);
+                //        System.out.println("i: " +i);
+                //    }
+                //}
+
+                if (!model.buttonList.get(i).isBorderPainted()) {
+                    model.buttonList.get(i).setBorder(BorderFactory.createLineBorder(Color.blue,1));
+                    model.buttonList.get(i).setBorderPainted(true);
+
+                    model.selectedImages.add(model.buttonList.get(i).getName());
+                    System.out.println("url: " + model.buttonList.get(i).getName() + " staged for save.");
+                    System.out.println("model.selectedImages.get(i) after add: " + model.selectedImages);
+                }
+                System.out.println("selectedImages.size() = " + model.selectedImages.size());
+                System.out.println("buttonList.size() = " + model.buttonList.size());
+                System.out.println("i: " +i);
             }
         }
     }
@@ -169,15 +186,25 @@ public class GFView extends JFrame implements ActionListener {
         try {
             controller.searchButtonPressed(searchTagField.getText());
             for (String url : model.urlList) {
-                int i = 0;
                 imageButton = new JButton(new ImageIcon(resize(url,200)));
-                imageButton.setName(searchTagField.getText() + i++);
+                imageButton.setName(url);
                 model.buttonList.add(imageButton);
             }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         System.out.println("urlList: " + model.urlList+"\n");
+
+        for (JButton button : model.buttonList){
+            imageButton = button;
+            imageButton.addActionListener(this);
+            imageButton.setBorderPainted(false);
+            onePanel.add(imageButton);
+        }
+
+        onePanel.revalidate();
+        onePanel.repaint();
+        oneScrollPanel.setViewportView(onePanel);
     }
 
     public BufferedImage resize(String url, int newHeight) throws IOException{

@@ -10,3 +10,5 @@ out/production/GetPhotoUrl/GPCode/
 .config
 /out
 savedURLs.txt
+out/
+/out/

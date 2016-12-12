@@ -1,4 +1,4 @@
-#Online Photo album
+#Photo Album Using Flikr
 ###CSC 413
 ##### Evan Terry and Alex Gaesser
 
