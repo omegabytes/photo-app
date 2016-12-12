@@ -137,6 +137,14 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == deleteButton) {
             controller.deleteButtonPressed();
+
+            for (int i =0; i<model.buttonList.size(); i++) {
+                if (model.buttonList.get(i).isBorderPainted()) {
+                    model.buttonList.remove(i);
+                    onePanel.remove(i);
+                    model.urlList.remove(i);
+                }
+            }
             onePanel.revalidate();
             onePanel.repaint();
         }
