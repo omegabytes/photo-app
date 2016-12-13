@@ -105,8 +105,6 @@ public class GFView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             model.maxResults = Integer.parseInt(numResultsStr.getText());
-            onePanel.removeAll();
-            model.buttonList.clear();
             model.urlList.clear();
 
             try {

@@ -66,6 +66,7 @@ public class GFController {
 
     public void loadButtonPressed(JPanel thisPanel) throws IOException {
         System.out.println("Load button pressed");
+        thisPanel.removeAll();
         model.loadImages();
     }
 
