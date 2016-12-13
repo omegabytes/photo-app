@@ -105,9 +105,16 @@ public class GFView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             model.maxResults = Integer.parseInt(numResultsStr.getText());
-
             onePanel.removeAll();
             model.buttonList.clear();
+            model.urlList.clear();
+
+            try {
+                controller.searchButtonPressed(searchTagField.getText());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
             createImageButton();
         }
         else if (e.getSource() == testButton) {
@@ -182,7 +189,7 @@ public class GFView extends JFrame implements ActionListener {
 
     public void createImageButton() {
         try {
-            controller.searchButtonPressed(searchTagField.getText());
+            //controller.searchButtonPressed(searchTagField.getText());
             for (String url : model.urlList) {
                 imageButton = new JButton(new ImageIcon(resize(url,200)));
                 imageButton.setName(url);
