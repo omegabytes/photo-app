@@ -3,6 +3,7 @@ package GPCode;
 import com.google.gson.Gson;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,7 +22,7 @@ public class GFModel {
 
     public int maxResults = 10;
 
-    private File file;
+    protected File file;
     private String fileName = "savedURLs.txt";
 
     // optional search fields
@@ -186,37 +187,11 @@ public class GFModel {
 
     public void deleteSelectedImage() {
 
-        //ListIterator<String> urlListIterator = urlList.listIterator();
-        //ListIterator<String> selectedImagesIterator = selectedImages.listIterator();
-        ////ListIterator<Image> imageListIterator = imageList.listIterator();
-        //
-        //while (selectedImagesIterator.hasNext()){
-        //
-        //    String currentURLtobeRemoved = selectedImagesIterator.next();
-        //
-        //    while (urlListIterator.hasNext() && imageListIterator.hasNext()) {
-        //        String currentURLinList = urlListIterator.next();
-        //
-        //        if (currentURLtobeRemoved.equals(currentURLinList)) {
-        //            selectedImagesIterator.remove();
-        //            //not sure if this will remove correct image from board
-        //            //aeg: removing it from the urlList should do it
-        //            imageListIterator.remove();
-        //            try {
-        //                parseFile(currentURLtobeRemoved);
-        //            }
-        //            catch (IOException e) {
-        //                 e.printStackTrace();
-        //            }
-        //        }
-        //    }
-        //}
-
     }
 
     public void loadImages() throws IOException {
 
-        //BufferedReader fileRead = new BufferedReader(new FileReader(file));
+        BufferedReader fileRead = new BufferedReader(new FileReader(file));
 
         /*
             Do we replace existing images or append?
@@ -226,20 +201,20 @@ public class GFModel {
             Array List then add the remainder on the back of the replacement.
          */
 
-        //urlList.clear();
-        //imageList.clear();
+        urlList.clear();
+        buttonList.clear();
 
-        //String currentLine;
+        String currentLine;
 
-        //try {
-        //    while ((currentLine = fileRead.readLine()) != null) {
-        //        getImage(currentLine);
-        //    }
-        //}
-        //catch (IOException e) {
-        //    System.out.print("Something happened but I have no clue as to what.");
-        //    e.printStackTrace();
-        //}
+        try {
+            while ((currentLine = fileRead.readLine()) != null) {
+                urlList.add(currentLine);
+            }
+        }
+        catch (IOException e) {
+            System.out.print("Something happened but I have no clue as to what.");
+            e.printStackTrace();
+        }
     }
 
 }

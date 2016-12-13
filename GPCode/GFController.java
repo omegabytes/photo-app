@@ -5,7 +5,12 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -59,16 +64,23 @@ public class GFController {
         model.handleSearch(text);
     }
 
-    public void loadButtonPressed() throws IOException {
+    public void loadButtonPressed(JPanel thisPanel) throws IOException {
         System.out.println("Load button pressed");
-        //todo: handle load
         model.loadImages();
     }
 
-    public void deleteButtonPressed() {
+    public void deleteButtonPressed(JPanel thisPanel) {
         System.out.println("Delete button pressed");
-        //todo: handle delete
         model.deleteSelectedImage();
+        for (int i =0; i<model.buttonList.size(); i++) {
+            if (model.buttonList.get(i).isBorderPainted()) {
+                model.buttonList.remove(i);
+                thisPanel.remove(i);
+                model.urlList.remove(i);
+            }
+        }
+        thisPanel.revalidate();
+        thisPanel.repaint();
     }
 
     public void exitButtonPressed() {
@@ -87,8 +99,4 @@ public class GFController {
         }
         return img;
     }
-
-    public void imageButtonPressed() {
-    }
-
 }

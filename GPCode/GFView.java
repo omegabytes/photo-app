@@ -106,14 +106,9 @@ public class GFView extends JFrame implements ActionListener {
         if (e.getSource() == searchButton) {
             model.maxResults = Integer.parseInt(numResultsStr.getText());
 
-            //System.out.println("button list before clear: " + model.buttonList);
             onePanel.removeAll();
             model.buttonList.clear();
-            //System.out.println("button list after clear: " + model.buttonList);
-
             createImageButton();
-            //System.out.println("button list after createImageButton(): " + model.buttonList);
-
         }
         else if (e.getSource() == testButton) {
             try{
@@ -129,24 +124,17 @@ public class GFView extends JFrame implements ActionListener {
             oneScrollPanel.setViewportView(onePanel);
         }
         else if (e.getSource() == loadButton) {
+            //onePanel.removeAll();
             try {
-                controller.loadButtonPressed();
+                controller.loadButtonPressed(onePanel);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            createImageButton();
         }
         else if (e.getSource() == deleteButton) {
-            controller.deleteButtonPressed();
+            controller.deleteButtonPressed(onePanel);
 
-            for (int i =0; i<model.buttonList.size(); i++) {
-                if (model.buttonList.get(i).isBorderPainted()) {
-                    model.buttonList.remove(i);
-                    onePanel.remove(i);
-                    model.urlList.remove(i);
-                }
-            }
-            onePanel.revalidate();
-            onePanel.repaint();
         }
         else if (e.getSource() == saveButton) {
             controller.saveButtonPressed();
