@@ -22,8 +22,9 @@ public class GFModel {
 
     public int maxResults = 10;
 
-    protected File file;
-    private String fileName = "savedURLs.txt";
+    static private String fileName = "savedURLs.txt";
+    protected File file = new File(fileName);
+
 
     // optional search fields
     //request += "&tags=hydrocephalic";
@@ -102,14 +103,9 @@ public class GFModel {
     // images at selected index saved url appends to file
     private void createFile(String url) throws IOException {
 
-//        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-
         BufferedWriter bufferedWriter = null;
         FileWriter writer = null;
 
-//        File file = new File("Saved Image URLs" + timestamp +".text");
-
-        file = new File(fileName);
 
         // creates the file
         try {
@@ -187,15 +183,8 @@ public class GFModel {
 
     public void loadImages() throws IOException {
 
+
         BufferedReader fileRead = new BufferedReader(new FileReader(file));
-
-        /*
-            Do we replace existing images or append?
-
-            If replacing then we can replace the Array List with one read from the file
-            If appending then we can copy current Array list not saved yet to a temporary
-            Array List then add the remainder on the back of the replacement.
-         */
 
         urlList.clear();
         buttonList.clear();
