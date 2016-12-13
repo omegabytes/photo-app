@@ -7,9 +7,7 @@ import javax.swing.*;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
@@ -152,42 +150,23 @@ public class GFView extends JFrame implements ActionListener {
 
         for (int i=0;i<model.buttonList.size();i++) {
             if (e.getSource() == model.buttonList.get(i)) {
-                System.out.println("Photo " + i + " selected.");
+                System.out.println("Photo " + i + " has been selected.");
+                System.out.println("\t\t" + model.buttonList.get(i).getName());
+
 
                 //todo: unstaging is not in the specs and has an index out of bounds bug anyway
-                //if (model.buttonList.get(i).isBorderPainted()) {
-                //    model.buttonList.get(i).setBorder(BorderFactory.createEmptyBorder());
-                //    model.buttonList.get(i).setBorderPainted(false);
-                //    System.out.println("model.selectedImages.get(i): " + model.selectedImages.get(i));
-                //    System.out.println("model.buttonList(i).getName(): " + model.buttonList.get(i).getName());
-                //
-                //    if (model.buttonList.get(i).getName().equals(model.selectedImages.get(i))) {
-                //        model.selectedImages.remove(i);
-                //
-                //        System.out.println("url: " + model.buttonList.get(i).getName() + " unstaged, will not be saved.");
-                //        System.out.println("model.selectedImages.get(i) after remove: " + model.selectedImages);
-                //        System.out.println("i: " +i);
-                //    }
-                //}
-
                 if (!model.buttonList.get(i).isBorderPainted()) {
                     model.buttonList.get(i).setBorder(BorderFactory.createLineBorder(Color.blue,1));
                     model.buttonList.get(i).setBorderPainted(true);
 
                     model.selectedImages.add(model.buttonList.get(i).getName());
-                    System.out.println("url: " + model.buttonList.get(i).getName() + " staged for save.");
-                    System.out.println("model.selectedImages.get(i) after add: " + model.selectedImages);
                 }
-                System.out.println("selectedImages.size() = " + model.selectedImages.size());
-                System.out.println("buttonList.size() = " + model.buttonList.size());
-                System.out.println("i: " +i);
             }
         }
     }
 
     public void createImageButton() {
         try {
-            //controller.searchButtonPressed(searchTagField.getText());
             for (String url : model.urlList) {
                 imageButton = new JButton(new ImageIcon(resize(url,200)));
                 imageButton.setName(url);
@@ -196,7 +175,6 @@ public class GFView extends JFrame implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        System.out.println("urlList: " + model.urlList+"\n");
 
         for (JButton button : model.buttonList){
             imageButton = button;
