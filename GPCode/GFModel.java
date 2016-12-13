@@ -3,15 +3,11 @@ package GPCode;
 import com.google.gson.Gson;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by alex on 12/5/16.
- */
 public class GFModel {
     public String apiKey;
     public String api  = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
@@ -26,11 +22,6 @@ public class GFModel {
     protected File file = new File(fileName);
 
 
-    // optional search fields
-    //request += "&tags=hydrocephalic";
-    //String userId = "88935360@N05";
-    //request += "&user_id=" + userId;
-
     public GFModel() throws IOException {
         try {
             FileReader fileReader = new FileReader(new File(".config"));
@@ -41,6 +32,10 @@ public class GFModel {
         }
     }
 
+    /*  Handles search functionality by using Flickr's API.
+        https://www.flickr.com/services/api/
+        Prints list of searched photos
+    */
     public void handleSearch(String searchTerm) throws IOException {
         request = api + "&per_page=16"
                 + "&format=json&nojsoncallback=1&extras=geo"
@@ -84,23 +79,23 @@ public class GFModel {
         String s = response.toString();
 
         Response responseObject = gson.fromJson(s, Response.class);
-        System.out.println("# photos = " + responseObject.photos.photo.length);
 
         for (int i = 0; i< maxResults; i++) {
-            System.out.println("Photo " + i +":");
+            System.out.println("Photo " + (i+1) +":");
             int farm = responseObject.photos.photo[i].farm;
             String server = responseObject.photos.photo[i].server;
             String id = responseObject.photos.photo[i].id;
             String secret = responseObject.photos.photo[i].secret;
             String photoUrl = "http://farm"+farm+".static.flickr.com/"
                     +server+"/"+id+"_"+secret+".jpg";
-            System.out.println(photoUrl);
+            System.out.println("\t\t" + photoUrl);
             urlList.add(photoUrl);
         }
     }
 
-    // Created by Evan Terry to create file for saved URLs
-    // images at selected index saved url appends to file
+    /*  Handles the file creation functionality.
+        Appends to a file if one exists.
+    */
     private void createFile(String url) throws IOException {
 
         BufferedWriter bufferedWriter = null;
@@ -138,48 +133,31 @@ public class GFModel {
         }
     }
 
-    public void parseFile(String urlToBeDeleted) throws IOException {
-
-        File tempFile = new File("tempFile.txt");
-
-        BufferedReader fileRead = new BufferedReader(new FileReader(file));
-        FileWriter tempFileWriter = new FileWriter(tempFile);
-
-        String currentLine;
-
-        try {
-
-            while((currentLine = fileRead.readLine()) !=null) {
-
-                String removedURL = currentLine.trim();
-
-                if (!removedURL.equals(urlToBeDeleted)) {
-                    tempFileWriter.write(currentLine + "\n");
-                }
-            }
-        }
-        catch (IOException e) {
-            System.out.print("Something happened but I have no clue as to what.");
-            e.printStackTrace();
-        }
-        finally {
-            tempFileWriter.close();
-            fileRead.close();
-            tempFile.renameTo(file);
-        }
-
-    }
-
+    /*  Handles the saving of images.
+        Calls createFile(String s) and
+        passes urlListArray to the function.
+    */
     public void saveImages() {
 
+        System.out.println("Added to " + fileName + ": ");
+
         for (String UrlList : urlList) {
+            System.out.println("\t\t" + UrlList);
+
             try {
                 createFile(UrlList);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
     }
+
+    /*  Handles the file read functionality.
+        Loads the file from a relative path.
+        Clears the current ArrayLists.
+        Replaces urlList with lines from text.
+    */
 
     public void loadImages() throws IOException {
 
@@ -191,9 +169,12 @@ public class GFModel {
 
         String currentLine;
 
+        System.out.println("Loaded from " + fileName + ":");
+
         try {
             while ((currentLine = fileRead.readLine()) != null) {
                 urlList.add(currentLine);
+                System.out.println("\t\t" + currentLine);
             }
         }
         catch (IOException e) {

@@ -1,25 +1,14 @@
 package GPCode;
 
-import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 
-/**
- * Created by alex on 12/5/16.
- */
 public class GFController {
     public GFController() throws IOException {
     }
@@ -48,7 +37,8 @@ public class GFController {
             sc.init(null, trustAllCerts, new SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         } catch (Exception e) {
-            ;
+            System.out.print("Something happened but I have no clue as to what.");
+            e.printStackTrace();
         }
     }
 
@@ -74,6 +64,8 @@ public class GFController {
         System.out.println("Delete button pressed");
         for (int i =0; i<model.buttonList.size(); i++) {
             if (model.buttonList.get(i).isBorderPainted()) {
+                System.out.println("Photo " + i + " has been deleted.");
+                System.out.println("\t\t" + model.buttonList.get(i).getName());
                 model.buttonList.remove(i);
                 thisPanel.remove(i);
                 model.urlList.remove(i);
@@ -85,18 +77,5 @@ public class GFController {
 
     public void exitButtonPressed() {
         System.exit(0);
-    }
-
-    private Image getImageURL(String urlString) {
-        Image img = null;
-        try {
-            final URL url = new URL(urlString);
-            img = ImageIO.read(url);
-        } catch (IOException e) {
-            System.out.println("Error loading image");
-            e.printStackTrace();
-            return null;
-        }
-        return img;
     }
 }
