@@ -112,9 +112,11 @@ public class GFView extends JFrame implements ActionListener {
         }
         else if (e.getSource() == testButton) {
             try{
-                String testUrl = "https://v1.std3.ru/73/19/1423452199-731965de88a111efd89bcfeea594c24b.jpeg";
+                String testUrl = searchTagField.getText();
                 JButton testButton = new JButton(new ImageIcon(resize(testUrl,200)));
                 onePanel.add(testButton);
+                model.buttonList.add(testButton);
+                model.urlList.add(testUrl);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

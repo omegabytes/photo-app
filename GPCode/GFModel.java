@@ -185,10 +185,6 @@ public class GFModel {
         }
     }
 
-    public void deleteSelectedImage() {
-
-    }
-
     public void loadImages() throws IOException {
 
         BufferedReader fileRead = new BufferedReader(new FileReader(file));

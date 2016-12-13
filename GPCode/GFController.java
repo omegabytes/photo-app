@@ -71,7 +71,6 @@ public class GFController {
 
     public void deleteButtonPressed(JPanel thisPanel) {
         System.out.println("Delete button pressed");
-        model.deleteSelectedImage();
         for (int i =0; i<model.buttonList.size(); i++) {
             if (model.buttonList.get(i).isBorderPainted()) {
                 model.buttonList.remove(i);
