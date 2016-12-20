@@ -62,6 +62,7 @@ public class GFController {
 
     public void deleteButtonPressed(JPanel thisPanel) {
         System.out.println("Delete button pressed");
+        //todo: this only deletes one at a time, why?
         for (int i =0; i<model.buttonList.size(); i++) {
             if (model.buttonList.get(i).isBorderPainted()) {
                 System.out.println("Photo " + i + " has been deleted.");
@@ -71,6 +72,8 @@ public class GFController {
                 model.urlList.remove(i);
             }
         }
+
+
         thisPanel.revalidate();
         thisPanel.repaint();
     }

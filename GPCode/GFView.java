@@ -154,7 +154,6 @@ public class GFView extends JFrame implements ActionListener {
                 System.out.println("\t\t" + model.buttonList.get(i).getName());
 
 
-                //todo: unstaging is not in the specs and has an index out of bounds bug anyway
                 if (!model.buttonList.get(i).isBorderPainted()) {
                     model.buttonList.get(i).setBorder(BorderFactory.createLineBorder(Color.blue,1));
                     model.buttonList.get(i).setBorderPainted(true);
